@@ -56,6 +56,14 @@ module Tuntap
       ioctl LibC::SIOCSIFADDR, ifr
     end
 
+    # Sets the netmask of the interface
+    def add_netmask(address : String) : Nil
+      ifr = ifreq
+      ifr.ifr = LibC::IfReqData.new(netmask: sockaddr(address))
+
+      ioctl LibC::SIOCSIFNETMASK, ifr
+    end
+
     # Adds a network route to this interface.  Most arguments are optional.
     def add_route(destination : String, gateway : String = UNSET_ADDR,
                   mask : String = UNSET_ADDR, metric = DEFAULT_METRIC,
