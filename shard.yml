@@ -1,10 +1,10 @@
 name: tuntap
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - Stefan Merettig <stefan-merettig@nuriaproject.org>
 
 
-crystal: 0.19.4
+crystal: 0.27
 
 license: MIT
