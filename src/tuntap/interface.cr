@@ -4,7 +4,7 @@ module Tuntap
     # Default value for the MTU
     DEFAULT_MTU = 1500
 
-    UNSET_ADDR = "0.0.0.0"
+    UNSET_ADDR     = "0.0.0.0"
     DEFAULT_METRIC = 100
 
     # The MTU
@@ -50,16 +50,26 @@ module Tuntap
     # Adds an IP address to the interface.  For this to work, the interface has
     # to be up.
     def add_address(address : String) : Nil
+      add_address(sockaddr(address))
+    end
+
+    # ditto
+    def add_address(address : LibC::Sockaddr) : Nil
       ifr = ifreq
-      ifr.ifr = LibC::IfReqData.new(addr: sockaddr(address))
+      ifr.ifr = LibC::IfReqData.new(addr: address)
 
       ioctl LibC::SIOCSIFADDR, ifr
     end
 
     # Sets the netmask of the interface
     def add_netmask(address : String) : Nil
+      add_netmask(sockaddr(address))
+    end
+
+    # ditto
+    def add_netmask(address : LibC::Sockaddr) : Nil
       ifr = ifreq
-      ifr.ifr = LibC::IfReqData.new(netmask: sockaddr(address))
+      ifr.ifr = LibC::IfReqData.new(netmask: address)
 
       ioctl LibC::SIOCSIFNETMASK, ifr
     end
